@@ -50,7 +50,7 @@ Cyber Witness is a P2P community of independent reporters and witnesses - an alt
 
   
 
-<a  display="inline"  href="./assets/list-solutions.png?raw=true">
+<a  display="inline"  href="./assets/report-event.png?raw=true">
 
   
 

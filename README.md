@@ -54,7 +54,7 @@ Cyber Witness is a P2P community of independent reporters and witnesses - an alt
 
   
 
-<img  src="./assets/report-event.png"  width="45%"  alt="Screenshot of report event"  title="Screenshot of report event">
+<img  src="./assets/report-event.png"  width="50%"  alt="Screenshot of report event"  title="Screenshot of report event">
 
   
 
@@ -68,7 +68,7 @@ Cyber Witness is a P2P community of independent reporters and witnesses - an alt
 
   
 
-<img  src="./assets/confirm-rumor.png"  width="45%"  alt="Screenshot of confirm rumor"  title="Screenshot of confirm rumor">
+<img  src="./assets/confirm-rumor.png"  width="25%"  alt="Screenshot of confirm rumor"  title="Screenshot of confirm rumor">
 
   
 
@@ -82,7 +82,7 @@ Cyber Witness is a P2P community of independent reporters and witnesses - an alt
 
   
 
-<img  src="./assets/rumors.png"  width="45%"  alt="Screenshot of rumors"  title="Screenshot of rumors">
+<img  src="./assets/rumors.png"  width="25%"  alt="Screenshot of rumors"  title="Screenshot of rumors">
 
   
 

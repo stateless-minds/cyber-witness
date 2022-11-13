@@ -147,7 +147,7 @@ https://www.reddit.com/r/CyberWitness/
 
   
 
-The game runs on the public IPFS network. In order to play it follow the steps below:
+The simulator runs on the public IPFS network. In order to play it follow the steps below:
 
   
 

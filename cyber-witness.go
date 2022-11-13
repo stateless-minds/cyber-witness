@@ -273,9 +273,6 @@ func (w *witness) Render() app.UI {
 						// 	app.Input().Class("is-dense").ID("file").Name("file").Type("file"),
 						// ),
 						app.Div().Class("p-form__group row").Body(
-							app.P().Class("p-form-help-text").ID("reportEvent").Text("Each event that turns out true increases your trust index.").Style("color", "#fff").Style("margin-top", "0"),
-						),
-						app.Div().Class("p-form__group row").Body(
 							app.Button().Class("u-vertically-centered").Text("Report event").OnClick(w.onSubmitEvent),
 						),
 					),
@@ -286,7 +283,6 @@ func (w *witness) Render() app.UI {
 			app.Div().Class("row u-vertically-center").Body(
 				app.Div().Class("col-12").Body(
 					app.H1().Text("Been a witness of an event?"),
-					app.P().Text("Confirm a rumor that already exists. Each rumor that turns out true increases your trust index."),
 					app.Button().Text("Confirm rumors").OnClick(w.openRumorsDialog),
 				),
 			),

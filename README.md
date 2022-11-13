@@ -209,7 +209,7 @@ The game runs on the public IPFS network. In order to play it follow the steps b
 
   
 
-7. If you like the game consider pinning it to your local node so that you become a permanent host of it while you have IPFS daemon running
+7. If you like the simulator consider pinning it to your local node so that you become a permanent host of it while you have IPFS daemon running
 
   
 
@@ -223,7 +223,7 @@ The game runs on the public IPFS network. In order to play it follow the steps b
 
   
 
-Please note the game has been developed on a WQHD resolution(2560x1440) and is currently not responsive or optimized for mobile devices. For best gaming experience if you play in FHD(1920x1080) please set your browser zoom settings to 150%.
+Please note the simulator has been developed on a WQHD resolution(2560x1440) and is currently not responsive or optimized for mobile devices. For best gaming experience if you play in FHD(1920x1080) please set your browser zoom settings to 150%.
 
 ## Acknowledgments
 

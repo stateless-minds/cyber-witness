@@ -181,7 +181,7 @@ The game runs on the public IPFS network. In order to play it follow the steps b
 
   
 
-"Access-Control-Allow-Origin": ["webui://-", "http://localhost:3000", "http://bafybeiff3phnxzhvt523q7rj4flwd42pgrkfuqy5csy7lmrmwcvznbzdha.ipfs.localhost:8080", "http://127.0.0.1:5001", "https://webui.ipfs.io"],
+"Access-Control-Allow-Origin": ["webui://-", "http://localhost:3000", "http://http://bafybeif4tg5r5ioegr7e6byofwspeyzi5hwiz426pskwkuhmq7a3uz3qla.ipfs.localhost:8080", "http://127.0.0.1:5001", "https://webui.ipfs.io"],
 
   
 
@@ -205,7 +205,7 @@ The game runs on the public IPFS network. In order to play it follow the steps b
 
   
 
-6. Navigate to <a  href="https://ipfs.io/ipfs/QmZW6NwGBG9ZeWWLJwsAgY8KVTGMwvESwbeL7KYT4dsgSb">https://ipfs.io/ipfs/QmZW6NwGBG9ZeWWLJwsAgY8KVTGMwvESwbeL7KYT4dsgSb</a> and let's simulate the future together!
+6. Navigate to <a  href="https://ipfs.io/ipfs/Qmb2sKM6j3zgBe8MfLfFHmEecrqEeT3JGZxWWzk5GFNYNs">https://ipfs.io/ipfs/Qmb2sKM6j3zgBe8MfLfFHmEecrqEeT3JGZxWWzk5GFNYNs</a> and let's simulate the future together!
 
   
 

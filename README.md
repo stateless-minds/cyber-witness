@@ -225,23 +225,6 @@ The game runs on the public IPFS network. In order to play it follow the steps b
 
 Please note the game has been developed on a WQHD resolution(2560x1440) and is currently not responsive or optimized for mobile devices. For best gaming experience if you play in FHD(1920x1080) please set your browser zoom settings to 150%.
 
-  
-  
-
-## Roadmap
-
-  
-
-1. Make reputation index context/category based
-
-  
-
-2. Make voting time-restricted
-
-  
-
-  
-
 ## Acknowledgments
 
   

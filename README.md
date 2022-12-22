@@ -181,7 +181,7 @@ The simulator runs on the public IPFS network. In order to play it follow the st
 
   
 
-"Access-Control-Allow-Origin": ["webui://-", "http://localhost:3000", "http://http://bafybeif4tg5r5ioegr7e6byofwspeyzi5hwiz426pskwkuhmq7a3uz3qla.ipfs.localhost:8080", "http://127.0.0.1:5001", "https://webui.ipfs.io"],
+"Access-Control-Allow-Origin": ["webui://-", "http://localhost:3000", "http://bafybeif4tg5r5ioegr7e6byofwspeyzi5hwiz426pskwkuhmq7a3uz3qla.ipfs.localhost:8080", "http://127.0.0.1:5001", "https://webui.ipfs.io"],
 
   
 

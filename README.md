@@ -181,7 +181,7 @@ The simulator runs on the public IPFS network. In order to play it follow the st
 
   
 
-"Access-Control-Allow-Origin": ["webui://-", "http://localhost:3000", "http://bafybeif4tg5r5ioegr7e6byofwspeyzi5hwiz426pskwkuhmq7a3uz3qla.ipfs.localhost:8080", "http://127.0.0.1:5001", "https://webui.ipfs.io"],
+"Access-Control-Allow-Origin": ["webui://-", "http://localhost:3000", "http://k51qzi5uqu5dgxg5be41yci6sli2yj9bm69j361nh6vpkwm3xrbhpbchf853i4.ipns.localhost:8080", "http://127.0.0.1:5001", "https://webui.ipfs.io"],
 
   
 
@@ -205,7 +205,7 @@ The simulator runs on the public IPFS network. In order to play it follow the st
 
   
 
-6. Navigate to <a  href="https://ipfs.io/ipfs/Qmb2sKM6j3zgBe8MfLfFHmEecrqEeT3JGZxWWzk5GFNYNs">https://ipfs.io/ipfs/Qmb2sKM6j3zgBe8MfLfFHmEecrqEeT3JGZxWWzk5GFNYNs</a> and let's simulate the future together!
+6. Navigate to <a  href="https://ipfs.io/ipns/k51qzi5uqu5dgxg5be41yci6sli2yj9bm69j361nh6vpkwm3xrbhpbchf853i4">Cyber Witness</a> and let's simulate the future together!
 
   
 

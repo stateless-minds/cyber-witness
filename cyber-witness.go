@@ -3,17 +3,19 @@ package main
 import (
 	"encoding/json"
 	"log"
+	"net/http"
 	"sort"
 	"strconv"
 	"time"
 
+	"github.com/NYTimes/gziphandler"
 	"github.com/foolin/mixer"
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
 	"github.com/mitchellh/mapstructure"
 	shell "github.com/stateless-minds/go-ipfs-api"
 )
 
-const dbAddressEvent = "/orbitdb/bafyreifhynz6quosu65iszr46b6jw3qlfdpgbvqwincnqc72hvhwkan3bm/event"
+const dbNameEvent = "event"
 
 const (
 	topicCreateEvent = "create-event"
@@ -91,12 +93,12 @@ func (w *witness) OnMount(ctx app.Context) {
 	w.noNews = true
 
 	ctx.Async(func() {
-		// err := w.sh.OrbitDocsDelete(dbAddressEvent, "all")
+		// err := w.sh.OrbitDocsDelete(dbNameEvent, "all")
 		// if err != nil {
 		// 	log.Fatal(err)
 		// }
 
-		v, err := w.sh.OrbitDocsQuery(dbAddressEvent, "type", "event")
+		v, err := w.sh.OrbitDocsQuery(dbNameEvent, "type", "event")
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -623,7 +625,7 @@ func (w *witness) onSubmitEvent(ctx app.Context, e app.Event) {
 		}
 
 		ctx.Async(func() {
-			err = w.sh.OrbitDocsPut(dbAddressEvent, ev)
+			err = w.sh.OrbitDocsPut(dbNameEvent, ev)
 			if err != nil {
 				ctx.Dispatch(func(ctx app.Context) {
 					w.createNotification(ctx, NotificationDanger, ErrorHeader, "Could not create event. Try again later.")
@@ -658,7 +660,7 @@ func (w *witness) onAddDetails(ctx app.Context, e app.Event) {
 	}
 
 	ctx.Async(func() {
-		err = w.sh.OrbitDocsPut(dbAddressEvent, ev)
+		err = w.sh.OrbitDocsPut(dbNameEvent, ev)
 		if err != nil {
 			ctx.Dispatch(func(ctx app.Context) {
 				w.createNotification(ctx, NotificationDanger, ErrorHeader, "Could not add details. Try again later.")
@@ -772,7 +774,7 @@ func (w *witness) confirmRumor(ctx app.Context, e app.Event) {
 	}
 
 	ctx.Async(func() {
-		err = w.sh.OrbitDocsPut(dbAddressEvent, ev)
+		err = w.sh.OrbitDocsPut(dbNameEvent, ev)
 		if err != nil {
 			ctx.Dispatch(func(ctx app.Context) {
 				w.createNotification(ctx, NotificationDanger, ErrorHeader, "Could not confirm rumor. Try again later.")
@@ -799,5 +801,51 @@ func (w *witness) toggleAccordion(ctx app.Context, e app.Event) {
 		app.Window().GetElementByID(id).Call("setAttribute", "aria-hidden", "true")
 	} else {
 		app.Window().GetElementByID(id).Call("setAttribute", "aria-hidden", "false")
+	}
+}
+
+// The main function is the entry point where the app is configured and started.
+// It is executed in 2 different environments: A client (the web browser) and a
+// server.
+func main() {
+	// The first thing to do is to associate the hello component with a path.
+	//
+	// This is done by calling the Route() function,  which tells go-app what
+	// component to display for a given path, on both client and server-side.
+	app.Route("/", &witness{})
+
+	// Once the routes set up, the next thing to do is to either launch the app
+	// or the server that serves the app.
+	//
+	// When executed on the client-side, the RunWhenOnBrowser() function
+	// launches the app,  starting a loop that listens for app events and
+	// executes client instructions. Since it is a blocking call, the code below
+	// it will never be executed.
+	//
+	// When executed on the server-side, RunWhenOnBrowser() does nothing, which
+	// lets room for server implementation without the need for precompiling
+	// instructions.
+	app.RunWhenOnBrowser()
+
+	// Finally, launching the server that serves the app is done by using the Go
+	// standard HTTP package.
+	//
+	// The Handler is an HTTP handler that serves the client and all its
+	// required resources to make it work into a web browser. Here it is
+	// configured to handle requests with a path that starts with "/".
+
+	withGz := gziphandler.GzipHandler(&app.Handler{
+		Name:        "cyber-witness",
+		Description: "Cyber Witness - Liquid democracy politics simulator based on personal reputation index",
+		Styles: []string{
+			"https://assets.ubuntu.com/v1/vanilla-framework-version-3.8.0.min.css",
+			"https://use.fontawesome.com/releases/v6.2.0/css/all.css",
+		},
+		Scripts: []string{},
+	})
+	http.Handle("/", withGz)
+
+	if err := http.ListenAndServe(":7000", nil); err != nil {
+		log.Fatal(err)
 	}
 }

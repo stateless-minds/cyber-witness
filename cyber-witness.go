@@ -196,7 +196,7 @@ func (w *witness) subscriptionUpdateEvent(ctx app.Context) {
 		str := string(res.Data)
 		log.Println("Subscriber of topic update-event received message: " + str)
 		ctx.Async(func() {
-			w.subscribeToCreateEventTopic(ctx)
+			w.subscribeToUpdateEventTopic(ctx)
 		})
 
 		e := Event{}

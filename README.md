@@ -7,7 +7,7 @@
 
   
 
-![Logo](./assets/logo.png)
+![Logo](./assets/p2p-news.drawio.png)
 
 Over the past few years we are seeing the end of free speech and the battle for communication control. Censorship, fact checking and surveillance are quickly becoming the norm. The end of free speech leads to the end of democracy as we know it. 
 

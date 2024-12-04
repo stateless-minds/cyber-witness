@@ -10,7 +10,7 @@ import (
 
 	"github.com/NYTimes/gziphandler"
 	"github.com/foolin/mixer"
-	"github.com/maxence-charriere/go-app/v9/pkg/app"
+	"github.com/maxence-charriere/go-app/v10/pkg/app"
 	"github.com/mitchellh/mapstructure"
 	shell "github.com/stateless-minds/go-ipfs-api"
 )
@@ -231,16 +231,16 @@ func (w *witness) Render() app.UI {
 		app.Link().Rel("stylesheet").Href("https://assets.ubuntu.com/v1/vanilla-framework-version-3.8.0.min.css"),
 		app.Link().Rel("stylesheet").Href("https://use.fontawesome.com/releases/v6.2.0/css/all.css"),
 		app.Link().Rel("stylesheet").Href("/app.css"),
-		app.If(len(w.notifications) > 0,
-			app.Range(w.notifications).Map(func(s string) app.UI {
+		app.If(len(w.notifications) > 0, func() app.UI {
+			return app.Range(w.notifications).Map(func(s string) app.UI {
 				return app.Div().Class("p-notification--"+w.notifications[s].status).Body(
 					app.Div().Class("p-notification__content").Body(
 						app.H5().Class("p-notification__title").Text(w.notifications[s].header),
 						app.P().Class("p-notification__message").Text(w.notifications[s].message),
 					),
 				).Style("position", "fixed").Style("width", "100%").Style("z-index", "999")
-			}),
-		),
+			})
+		}),
 		app.Section().Class("p-strip--suru").Body(
 			app.Div().Class("row u-vertically-center").Body(
 				app.Div().Class("col-12").Body(
@@ -313,58 +313,60 @@ func (w *witness) Render() app.UI {
 							app.Th().Class("u-align--right").Text("Details"),
 						),
 					),
-					app.If(len(w.events) > 0, app.TBody().Body(
-						app.Range(w.events).Slice(func(i int) app.UI {
-							return app.Tr().DataSet("title", i).Body(
-								app.Td().Class("has-overflow").DataSet("column", "title").Body(
-									app.Div().Text(w.events[i].Title),
-								),
-								app.Td().Class("has-overflow").DataSet("column", "location").Body(
-									app.Div().Text(w.events[i].Location),
-								),
-								app.Td().Class("has-overflow").DataSet("column", "action").Body(
-									app.If(w.citizenID == w.events[i].Reporter || w.isWitness,
-										app.Button().Class("is-dense").Value(w.events[i].ID).Text("Confirm").Disabled(true).OnClick(w.confirmRumor),
-									).Else(
-										app.Button().Class("is-dense").Value(w.events[i].ID).Text("Confirm").OnClick(w.confirmRumor),
+					app.If(len(w.events) > 0, func() app.UI {
+						return app.TBody().Body(
+							app.Range(w.events).Slice(func(i int) app.UI {
+								return app.Tr().DataSet("title", i).Body(
+									app.Td().Class("has-overflow").DataSet("column", "title").Body(
+										app.Div().Text(w.events[i].Title),
 									),
-								),
-								app.Td().Class("has-overflow u-align--right").DataSet("column", "details").Body(
-									app.Button().Class("u-toggle is-dense").Aria("controls", "expanded-row").Aria("expanded", "true").DataSet("shown-text", "Hide").DataSet("hidden-text", "Show").Value(w.events[i].ID).Text("Hide").OnClick(w.expandDetails),
-								),
-								app.Td().ID("expanded-row-"+w.events[i].ID).Class("has-overflow p-table__expanding-panel").Aria("hidden", "false").Body(
-									app.H4().Text("Details"),
-									app.Range(w.events[i].Details).Slice(func(n int) app.UI {
-										return app.Div().Class("row").Body(
-											app.Div().Class("col-8 p-card").Body(
-												app.P().Text(w.events[i].Details[n]),
-											),
-										)
-									}),
-									app.If(w.citizenID != w.events[i].Reporter && !w.isWitness,
-										app.H4().Text("Add new details: "),
-										app.Div().Class("p-form p-form--stacked").Body(
-											app.Div().Class("p-form__group row").Body(
-												app.Textarea().Class("is-dense").ID("details").Name("details").Rows(2).OnKeyUp(w.onEventDetails),
-											),
-											app.Div().Class("p-form__group row").Body(
-												app.Button().Class("u-vertically-centered").Value(w.events[i].ID).Text("Add details").OnClick(w.onAddDetails),
-											),
-										),
+									app.Td().Class("has-overflow").DataSet("column", "location").Body(
+										app.Div().Text(w.events[i].Location),
 									),
-								),
-							)
-						}),
-					)).Else(
-						app.Caption().Class("p-strip").Body(
+									app.Td().Class("has-overflow").DataSet("column", "action").Body(
+										app.If(w.citizenID == w.events[i].Reporter || w.isWitness, func() app.UI {
+											return app.Button().Class("is-dense").Value(w.events[i].ID).Text("Confirm").Disabled(true).OnClick(w.confirmRumor)
+										}).Else(func() app.UI {
+											return app.Button().Class("is-dense").Value(w.events[i].ID).Text("Confirm").OnClick(w.confirmRumor)
+										}),
+									),
+									app.Td().Class("has-overflow u-align--right").DataSet("column", "details").Body(
+										app.Button().Class("u-toggle is-dense").Aria("controls", "expanded-row").Aria("expanded", "true").DataSet("shown-text", "Hide").DataSet("hidden-text", "Show").Value(w.events[i].ID).Text("Hide").OnClick(w.expandDetails),
+									),
+									app.Td().ID("expanded-row-"+w.events[i].ID).Class("has-overflow p-table__expanding-panel").Aria("hidden", "false").Body(
+										app.H4().Text("Details"),
+										app.Range(w.events[i].Details).Slice(func(n int) app.UI {
+											return app.Div().Class("row").Body(
+												app.Div().Class("col-8 p-card").Body(
+													app.P().Text(w.events[i].Details[n]),
+												),
+											)
+										}),
+										app.If(w.citizenID != w.events[i].Reporter && !w.isWitness, func() app.UI {
+											return app.Div().Class("p-form p-form--stacked").Body(
+												app.H4().Text("Add new details: "),
+												app.Div().Class("p-form__group row").Body(
+													app.Textarea().Class("is-dense").ID("details").Name("details").Rows(2).OnKeyUp(w.onEventDetails),
+												),
+												app.Div().Class("p-form__group row").Body(
+													app.Button().Class("u-vertically-centered").Value(w.events[i].ID).Text("Add details").OnClick(w.onAddDetails),
+												),
+											)											
+										}),
+									),
+								)
+							}),
+						)
+					}).Else(func() app.UI {
+						return app.Caption().Class("p-strip").Body(
 							app.Div().Class("row").Body(
 								app.Div().Class("u-align--left col-8 col-medium-4 col-small-3").Body(
 									app.P().Class("p-heading--4 u-no-margin--bottom").Text("No recent rumors"),
 									app.P().Text("Check back later or report an event"),
 								),
 							),
-						),
-					),
+						)
+					}),
 				),
 			),
 		),
@@ -385,45 +387,47 @@ func (w *witness) Render() app.UI {
 							app.Th().Class("u-align--right").Text("Details"),
 						),
 					),
-					app.If(!w.noNews, app.TBody().Body(
-						app.Range(w.events).Slice(func(i int) app.UI {
-							return app.If(w.events[i].ConfirmedBy > 1,
-								app.Tr().DataSet("title", i).Body(
-									app.Td().Class("has-overflow").DataSet("column", "title").Body(
-										app.Div().Text(w.events[i].Title),
-									),
-									app.Td().Class("has-overflow").DataSet("column", "location").Body(
-										app.Div().Text(w.events[i].Location),
-									),
-									app.Td().Class("has-overflow").DataSet("column", "confirmedBy").Body(
-										app.Div().Text(w.events[i].ConfirmedBy),
-									),
-									app.Td().Class("has-overflow u-align--right").DataSet("column", "details").Body(
-										app.Button().Class("u-toggle is-dense").Aria("controls", "expanded-row").Aria("expanded", "true").DataSet("shown-text", "Hide").DataSet("hidden-text", "Show").Value(w.events[i].ID).Text("Hide").OnClick(w.expandDetails),
-									),
-									app.Td().ID("expanded-row-"+w.events[i].ID).Class("has-overflow p-table__expanding-panel").Aria("hidden", "false").Body(
-										app.H4().Text("Details"),
-										app.Range(w.events[i].Details).Slice(func(n int) app.UI {
-											return app.Div().Class("row").Body(
-												app.Div().Class("col-8 p-card").Body(
-													app.P().Text(w.events[i].Details[n]),
-												),
-											)
-										}),
-									),
-								),
-							)
-						}),
-					)).Else(
-						app.Caption().Class("p-strip").Body(
+					app.If(!w.noNews, func() app.UI {
+						return app.TBody().Body(
+							app.Range(w.events).Slice(func(i int) app.UI {
+								return app.If(w.events[i].ConfirmedBy > 1, func() app.UI {
+									return app.Tr().DataSet("title", i).Body(
+										app.Td().Class("has-overflow").DataSet("column", "title").Body(
+											app.Div().Text(w.events[i].Title),
+										),
+										app.Td().Class("has-overflow").DataSet("column", "location").Body(
+											app.Div().Text(w.events[i].Location),
+										),
+										app.Td().Class("has-overflow").DataSet("column", "confirmedBy").Body(
+											app.Div().Text(w.events[i].ConfirmedBy),
+										),
+										app.Td().Class("has-overflow u-align--right").DataSet("column", "details").Body(
+											app.Button().Class("u-toggle is-dense").Aria("controls", "expanded-row").Aria("expanded", "true").DataSet("shown-text", "Hide").DataSet("hidden-text", "Show").Value(w.events[i].ID).Text("Hide").OnClick(w.expandDetails),
+										),
+										app.Td().ID("expanded-row-"+w.events[i].ID).Class("has-overflow p-table__expanding-panel").Aria("hidden", "false").Body(
+											app.H4().Text("Details"),
+											app.Range(w.events[i].Details).Slice(func(n int) app.UI {
+												return app.Div().Class("row").Body(
+													app.Div().Class("col-8 p-card").Body(
+														app.P().Text(w.events[i].Details[n]),
+													),
+												)
+											}),
+										),
+									)
+								})
+							}),
+						)
+					}).Else(func() app.UI {
+						return app.Caption().Class("p-strip").Body(
 							app.Div().Class("row").Body(
 								app.Div().Class("u-align--left col-8 col-medium-4 col-small-3").Body(
 									app.P().Class("p-heading--4 u-no-margin--bottom").Text("No recent news"),
 									app.P().Text("Check back later or report an event"),
 								),
 							),
-						),
-					),
+						)
+					}),
 				),
 			),
 		),
@@ -812,7 +816,9 @@ func main() {
 	//
 	// This is done by calling the Route() function,  which tells go-app what
 	// component to display for a given path, on both client and server-side.
-	app.Route("/", &witness{})
+	app.Route("/", func() app.Composer{
+		return &witness{}
+	})
 
 	// Once the routes set up, the next thing to do is to either launch the app
 	// or the server that serves the app.
